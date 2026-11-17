@@ -99,7 +99,7 @@ If a brief needs any of the above, suggest an alternative angle. Usually that's 
 
 ## Categories
 
-**Will do:** T1D tech and supplies, ADHD tools, mum and family products, kids' products, alcohol, quick food, organisation and "ADHD tax" fixes.
+**Will do:** T1D tech and supplies, ADHD tools, mum and family products, kids' products, alcohol, diet and low-carb brands, quick food, organisation and "ADHD tax" fixes.
 
 **Won't do:** Anything claiming to cure or reverse diabetes, weight loss products, unproven supplements.
 
@@ -110,7 +110,11 @@ If a brief needs any of the above, suggest an alternative angle. Usually that's 
 
 **Kids' products:** Same privacy rules as always. Miss 5 / Miss 3 only, no faces if Mara decides that, no uniforms, school names or location giveaways.
 
-*To confirm with Mara: diet or low-carb brands.*
+**Diet and low-carb brands:** Yes, with rules:
+- No weight loss framing. Weight loss products are still a no, so a low-carb brand can't be pitched as one.
+- No food shaming. No "bad" foods, no "guilt-free", no "cheat meals".
+- No glucose claims for the product. Same as alcohol: what she noticed on her Dexcom, as her experience only.
+- Frame it as "less maths at dinner" or "one less thing to bolus for", not "carbs are the enemy".
 
 ---
 
