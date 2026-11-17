@@ -99,11 +99,18 @@ If a brief needs any of the above, suggest an alternative angle. Usually that's 
 
 ## Categories
 
-**Will do:** T1D tech and supplies, ADHD tools, mum and family products, quick food, organisation and "ADHD tax" fixes.
+**Will do:** T1D tech and supplies, ADHD tools, mum and family products, kids' products, alcohol, quick food, organisation and "ADHD tax" fixes.
 
 **Won't do:** Anything claiming to cure or reverse diabetes, weight loss products, unproven supplements.
 
-*To confirm with Mara: alcohol, diet or low-carb brands, kids' products.*
+**Alcohol rules:**
+- Miss 5 and Miss 3 never appear in alcohol content. No kids' toys, lunchboxes or school stuff in frame either. The ABAC code bans alcohol marketing that appeals to minors, and a kid in the background counts.
+- No "this won't spike you" or "diabetic-friendly" claims. She can say what she noticed on her Dexcom, framed as her experience only.
+- Don't make drinking look like a way to cope with mum stress.
+
+**Kids' products:** Same privacy rules as always. Miss 5 / Miss 3 only, no faces if Mara decides that, no uniforms, school names or location giveaways.
+
+*To confirm with Mara: diet or low-carb brands.*
 
 ---
 
