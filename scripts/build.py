@@ -366,10 +366,22 @@ def write_captions(words, st, path):
              "MarginL, MarginR, MarginV, Encoding",
              f"Style: Cap,{c['family']},{c['size']},{ass_col(c['colour'])},{ass_col(c['colour'])},"
              f"{ass_col(c['outline_colour'])},&H90000000,{-1 if c.get('bold', True) else 0},0,0,0,100,100,0,0,1,"
-             f"{c['outline']},{c.get('shadow', 1)},5,60,60,0,1", "",
+             f"{c['outline']},{c.get('shadow', 1)},5,{c.get('margin_l', 60)},{c.get('margin_r', 60)},0,1", "",
              "[Events]", "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text"]
     pop = r"{\fscx85\fscy85\t(0,70,\fscx100\fscy100)}" if c.get('pop', True) else ''
     lead = c.get('lead', 0.066)     # show each word 2 frames early so it never lags the voice
+    n = c.get('chunk', 1)           # words per caption; >1 groups words, breaking after punctuation
+    if n > 1:
+        grouped, cur = [], []
+        for w in words:
+            if cur and w[1] - cur[-1][2] > 0.8:
+                grouped.append(cur); cur = []
+            cur.append(w)
+            if len(cur) >= n or w[0].rstrip()[-1:] in '.,?!':
+                grouped.append(cur); cur = []
+        if cur:
+            grouped.append(cur)
+        words = [(' '.join(x[0].strip() for x in g), g[0][1], g[-1][2]) for g in grouped]
     prev = 0
     for i, (w, s, e) in enumerate(words):
         s = max(prev, s - lead)
@@ -379,7 +391,7 @@ def write_captions(words, st, path):
         txt = w.strip()
         if c.get('strip_punctuation', False):
             txt = txt.strip(',.')
-        lines.append(f"Dialogue: 1,{ass_time(s)},{ass_time(end)},Cap,,0,0,0,,{{\\pos(540,{y})}}{pop}{txt}")
+        lines.append(f"Dialogue: 1,{ass_time(s)},{ass_time(end)},Cap,,0,0,0,,{{\\pos({c.get('x', 540)},{y})}}{pop}{txt}")
     open(path, 'w').write('\n'.join(lines) + '\n')
 
 
@@ -439,12 +451,20 @@ def main():
     t_out = 0.0
     for si, sg in enumerate(segs):
         wl_all = words[sg['clip']]['words']
-        idx, score = find_words(wl_all, sg['say'], near_of(sg))
-        wl = [wl_all[i] for i in idx]
-        if score < 0.9:
-            print(f"  note: segment {si} matched at {score:.2f}: \"{' '.join(w[0] for w in wl)}\"")
-        spans, wl = speech_spans(src(sg['clip']), wl, pacing)
-        learned = [(x['a'], x['b']) for x in auto_skips if x['clip'] == sg['clip']]
+        if 'span' in sg:
+            # a fixed stretch of the raw clip kept whole (an action like a sip, or a
+            # line the transcriber missed); 'words' adds captions for it by hand
+            sa0, sb0 = sg['span']
+            wl = sorted([w for w in wl_all if w[1] >= sa0 and w[2] <= sb0] + [list(w) for w in sg.get('words', [])],
+                        key=lambda w: w[1])
+            spans = [[sa0, sb0]]
+        else:
+            idx, score = find_words(wl_all, sg['say'], near_of(sg))
+            wl = [wl_all[i] for i in idx]
+            if score < 0.9:
+                print(f"  note: segment {si} matched at {score:.2f}: \"{' '.join(w[0] for w in wl)}\"")
+            spans, wl = speech_spans(src(sg['clip']), wl, pacing)
+        learned = [] if 'span' in sg else [(x['a'], x['b']) for x in auto_skips if x['clip'] == sg['clip']]
         for sa, sb in sg.get('skip', []) + learned:
             cut = []
             for x, y in spans:
@@ -635,7 +655,7 @@ def main():
             enc.stdin.write(np.ascontiguousarray(img).tobytes())
             fi += 1
     enc.stdin.close(); enc.wait()
-    json.dump({'segments': [{'say': s['say'], 'start': s['_start'], 'end': s['_end']} for s in segs],
+    json.dump({'segments': [{'say': s.get('say', ' '.join(w[0] for w in s.get('words', []))), 'start': s['_start'], 'end': s['_end']} for s in segs],
                'words': cap_words, 'total': total, 'cuts': len(parts), 'shots': len(shots),
                'parts': [{k: p[k] for k in ('clip', 'a', 'b', 'at', 'seg')} for p in parts],
                # where the overlays sit, so qa.py can check faces, mouths and B-roll reuse
