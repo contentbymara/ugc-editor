@@ -556,6 +556,9 @@ def main():
         t0 = at_time(c['at'])
         if 'image' in c:
             sp = image_sprite(os.path.join(job, c['image']), int(W * c.get('w', 0.6)), crop=c.get('crop'))
+        elif 'text' in c:
+            # plain text label in the hook's box style, e.g. who's talking off camera
+            sp = hook_sprite(c['text'], deep_merge(style['hook'], c.get('style', {})))
         else:
             sp = list_sprite(c['title'], c['rows'], style['hook'])
         cards.append({**c, 't0': t0, 't1': t0 + c['dur'], 'sprite': sp})
