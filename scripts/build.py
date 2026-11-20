@@ -370,6 +370,16 @@ def write_captions(words, st, path):
              "[Events]", "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text"]
     pop = r"{\fscx85\fscy85\t(0,70,\fscx100\fscy100)}" if c.get('pop', True) else ''
     lead = c.get('lead', 0.066)     # show each word 2 frames early so it never lags the voice
+    n = c.get('chunk_words', 1)     # >1: show phrases of up to n words, breaking at , . ? !
+    if n > 1:
+        chunks, cur = [], []
+        for w in words:
+            cur.append(w)
+            if len(cur) >= n or w[0].strip()[-1:] in ',.?!':
+                chunks.append(cur); cur = []
+        if cur:
+            chunks.append(cur)
+        words = [(' '.join(x[0].strip() for x in ch), ch[0][1], ch[-1][2]) for ch in chunks]
     prev = 0
     for i, (w, s, e) in enumerate(words):
         s = max(prev, s - lead)
