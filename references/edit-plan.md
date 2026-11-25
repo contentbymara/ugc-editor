@@ -42,6 +42,10 @@ One file per job, at `<job>/.work/edit.json`. `build.py` reads it.
 **style** a file in `styles/` (default `house`). **style_overrides** changes any part of
 it for this brand, e.g. caption colour to the brand colour, if it reads well on video.
 
+**style_overrides caption.chunk / caption.max_chars** with `chunk` above 1, captions
+show several words at once; `max_chars` (about 22 at size 84) starts a new caption
+before one gets too wide for the screen, so long words never run off the edge.
+
 **caption_fixes** transcription spellings → correct spelling, lowercase keys. Always
 add the brand and product names here.
 
