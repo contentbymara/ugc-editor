@@ -373,8 +373,11 @@ def write_captions(words, st, path):
     n = c.get('chunk', 1)           # words per caption; >1 groups words, breaking after punctuation
     if n > 1:
         grouped, cur = [], []
+        mx = c.get('max_chars', 0)  # start a new caption before one gets too wide for the screen
         for w in words:
             if cur and w[1] - cur[-1][2] > 0.8:
+                grouped.append(cur); cur = []
+            if cur and mx and len(' '.join(x[0].strip() for x in cur + [w])) > mx:
                 grouped.append(cur); cur = []
             cur.append(w)
             if len(cur) >= n or w[0].rstrip()[-1:] in '.,?!':
