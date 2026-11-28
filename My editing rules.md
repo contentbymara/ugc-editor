@@ -11,7 +11,8 @@ On-screen captions. Burned in, sentence case, 3 to 6 words per chunk, your exact
 Text stays in the safe zone. Nothing in the bottom fifth or down the right side, where the app buttons sit.
 No “follow for more”. End on the reaction, the result, or a question.
 Kids-Miss 5 / Miss 3 only. No school uniforms, school names or anything that shows where you live.
-Kids' faces are OK, in paid brand ads too. Their names are never OK: cut any line where a name is said, and label them Miss 5 / Miss 3 in text.
+Kids' faces are OK, in paid brand ads too. Their names are never OK: cut any line where a name is said.
+No text labels on the kids testing a product ("Miss 5 & Miss 3 testing them"). It looks better without. Let the clip speak for itself.
 Cooking is a fast montage. Slow down for: something going wrong, a kid interrupting or helping, something you say out loud.
 
 ## Formats that worked
